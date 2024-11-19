@@ -117,7 +117,7 @@ jobs:
             aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban
             
             # Pull the Docker image from ECR
-            sudo docker pull 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste
+            sudo docker pull 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban
 
             # Run the Docker container on EC2
             sudo docker run -d -p 8080:8080 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban:latest
