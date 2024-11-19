@@ -53,7 +53,7 @@ jobs:
         run: |
           docker build -t urban-waste .
           docker tag urban-waste:latest 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste
-          docker push 825765397104.dkr.ecr.us-east-1.amazonaws.com/urban-waste:latest
+          docker push 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste:latest
 
   # Continuous Deployment
   deploy_to_ec2:
