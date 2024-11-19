@@ -51,9 +51,9 @@ jobs:
       # Step 4: Build and push Docker image to AWS ECR
       - name: Build and Push Docker image
         run: |
-          docker build -t urban-waste .
-          docker tag urban-waste:latest 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste
-          docker push 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste:latest
+          docker build -t urban .
+          docker tag urban:latest 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban
+          docker push 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban:latest
 
   # Continuous Deployment
   deploy_to_ec2:
@@ -97,7 +97,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@54.82.64.213 << EOF
             # Stop and remove any running container on port 8080
-            CONTAINER_ID=$(sudo docker ps -q -f "ancestor=961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste:latest")
+            CONTAINER_ID=$(sudo docker ps -q -f "ancestor=961341555760.dkr.ecr.us-east-1.amazonaws.com/urban:latest")
             if [ ! -z "$CONTAINER_ID" ]; then
               sudo docker stop $CONTAINER_ID
               sudo docker rm $CONTAINER_ID
@@ -106,7 +106,7 @@ jobs:
             fi
 
             # Optionally remove old images if needed
-            IMAGE_ID=$(sudo docker images -q 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste:latest)
+            IMAGE_ID=$(sudo docker images -q 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban:latest)
             if [ ! -z "$IMAGE_ID" ]; then
               sudo docker rmi $IMAGE_ID
             else
@@ -114,13 +114,13 @@ jobs:
             fi
 
             # Login to AWS ECR
-            aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste
+            aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban
             
             # Pull the Docker image from ECR
             sudo docker pull 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste
 
             # Run the Docker container on EC2
-            sudo docker run -d -p 8080:8080 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste:latest
+            sudo docker run -d -p 8080:8080 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban:latest
           EOF
 
       # Optional: Check the running container logs (for debugging purposes)
