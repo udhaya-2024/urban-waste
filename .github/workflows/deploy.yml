@@ -120,7 +120,7 @@ jobs:
             sudo docker pull 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban
 
             # Run the Docker container on EC2
-            sudo docker run -d -p 8080:8080 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban:latest
+            sudo docker run -d -p 8081:8080 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban:latest
           EOF
 
       # Optional: Check the running container logs (for debugging purposes)
