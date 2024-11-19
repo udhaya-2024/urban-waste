@@ -52,7 +52,7 @@ jobs:
       - name: Build and Push Docker image
         run: |
           docker build -t urban-waste .
-          docker tag endengered:latest 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste
+          docker tag urban-waste:latest 961341555760.dkr.ecr.us-east-1.amazonaws.com/urban-waste
           docker push 825765397104.dkr.ecr.us-east-1.amazonaws.com/urban-waste:latest
 
   # Continuous Deployment
